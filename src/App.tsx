@@ -1,26 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./style/style.scss"
+import {Provider} from 'mobx-react';
+import ListPetStore from "./stores/ListPetStore";
+import ListPets from "./components/ListPets";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const listPetStore = new ListPetStore();
+
+class App extends React.Component {
+  public render() {
+    return (
+      <Provider listPetStore={listPetStore}>
+        <ListPets/>
+      </Provider>
+    );
+  };
 }
 
 export default App;
