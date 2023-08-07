@@ -1,0 +1,51 @@
+version: '3.0'
+
+services:
+  nginx:
+    build:
+      context: docker/nginx
+    volumes:
+      - ./www:/www
+    container_name: container_nginx
+    ports:
+      - "8881:81"
+    networks:
+      - myProject
+    restart: always
+
+  php-fpm:
+    build:
+      context: docker/php-fpm
+    container_name: container_php
+    depends_on:
+      - mysql
+    volumes:
+      - ./www:/www
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      PHP_IDE_CONFIG: serverName=Docker
+    networks:
+      - myProject
+    restart: always
+
+  mysql:
+    platform: linux/x86_64
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    container_name: container_mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=project_db
+#      - MYSQL_PASSWORD=root
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    ports:
+      - "3337:3306"
+    networks:
+      - myProject
+    restart: always
+
+networks:
+  myProject:
+    driver: bridge

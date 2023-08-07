@@ -8,7 +8,7 @@ interface TodoListProps {
 
 @inject("listPetStore")
 @observer
-class ListPets extends React.Component<TodoListProps> {
+class ItemPet extends React.Component<TodoListProps> {
   public render() {
     // const { listPetStore } = this.props;
     // useEffect(() => {
@@ -19,10 +19,10 @@ class ListPets extends React.Component<TodoListProps> {
     // }, []);
     return (
       <>
-        "ListPets"
+        "ItemPet"
       </>
     )
   }
 }
 
-export default ListPets
+export default ItemPet
