@@ -1,10 +1,11 @@
 import React from "react";
 import {inject, observer} from "mobx-react";
 import ListPetStore from "../stores/ListPetStore";
-import {Button, Image, Modal} from 'antd';
+import {Button, Image} from 'antd';
 import {
   UserOutlined,
 } from '@ant-design/icons';
+import CustomForm from "./CustomForm";
 
 interface ListPetsProps {
   listPetStore?: ListPetStore
@@ -24,20 +25,17 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
     };
   }
 
-  showModal = (): void => {
+  onHiddenModal = (): void => {
+    this.setState({ isModalOpen: false });
+  };
+
+  onShowModal = (): void => {
     this.setState({isModalOpen: true});
   };
 
-  handleOk = (): void => {
-    this.setState({isModalOpen: false});
-  };
-
-  handleCancel = (): void => {
-    this.setState({isModalOpen: false});
-  };
-
   public render() {
-    const {isModalOpen}: any = this.state;
+    const {isModalOpen}: ListPetsState = this.state;
+    console.log(isModalOpen)
     // const { listPetStore } = this.props;
     // useEffect(() => {
     //   if (listPetStore) {
@@ -77,20 +75,14 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
             </div>
             <div className="buttons">
               <Button type="primary">Покормить морковкой</Button>
-              <Button type="primary" onClick={this.showModal}>Редактировать</Button>
+              <Button type="primary" onClick={this.onShowModal}>Редактировать</Button>
               <Button type="primary">Выключить</Button>
             </div>
           </div>
         </div>
-        <Modal title="Basic Modal"
-               open={isModalOpen}
-               onOk={this.handleOk}
-               onCancel={this.handleCancel}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Modal>
+        <CustomForm onHiddenModal={this.onHiddenModal}
+                    isModalOpen={isModalOpen}
+        />
       </div>
     )
   }

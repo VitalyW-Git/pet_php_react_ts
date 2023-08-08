@@ -10,13 +10,17 @@ class Router {
     protected array $currentControllerAction = [];
     
     public function __construct() {
-        $dat = __DIR__;
         $arr = require 'application/config/routes.php';
         foreach ($arr as $route => $params) {
             $this->fillParams($route, $params);
         }
     }
 
+    /**
+     * @param string $route
+     * @param array $params ['controller' => string,'action' => string],
+     * @return void
+     */
     private function fillParams(string $route, array $params): void
     {
         $route = preg_replace('/{([a-z]+):([^\}]+)}/', '(?P<\1>\2)', $route);
@@ -24,6 +28,9 @@ class Router {
         $this->routes[$route] = $params;
     }
 
+    /**
+     * @return bool
+     */
     private function matchCurrentUrl(): bool
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
@@ -36,6 +43,9 @@ class Router {
         return false;
     }
 
+    /**
+     * @return void
+     */
     public function run(): void
     {
         if ($this->matchCurrentUrl()) {

@@ -1,0 +1,23 @@
+.form {
+  &__nikeName {
+    margin: 0 0 10px 0;
+    .ant-form-item-label {
+      padding: 0;
+    }
+  }
+  &__home {
+    margin-bottom: 10px;
+  }
+  &__date {
+    margin-bottom: 10px;
+    .ant-form-item-label {
+      padding: 0;
+    }
+  }
+  &__owner {
+    margin-bottom: 10px;
+    .ant-form-item-label {
+      padding: 0;
+    }
+  }
+}

@@ -6,6 +6,9 @@ use application\core\View;
 
 class Controller {
 
+    /**
+     * @var array $route ['controller' => string,'action' => string],
+     */
 	public array $route;
 	public View $view;
 	public array $allAccessPages;
@@ -19,6 +22,10 @@ class Controller {
 		$this->model = $this->loadModel($currentControllerAction['controller']);
 	}
 
+    /**
+     * @param $name
+     * @return mixed|void
+     */
 	public function loadModel($name)
     {
 		$path = 'application\models\\'.ucfirst($name);
@@ -27,6 +34,9 @@ class Controller {
 		}
 	}
 
+    /**
+     * @return bool
+     */
     private function accessPage(): bool
     {
 		$this->allAccessPages = require "application/acl/{$this->route['controller']}.php";
@@ -36,6 +46,10 @@ class Controller {
 		return false;
 	}
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     private function isAccessPage(string $key): bool
     {
 		return in_array($this->route['action'], $this->allAccessPages[$key]);
