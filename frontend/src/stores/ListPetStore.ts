@@ -21,7 +21,7 @@ class ListPetStore {
   }
 
   addTodo = (todo: string): void => {
-
+    console.log(todo)
   };
 
 }
