@@ -33,7 +33,6 @@ class Router {
      */
     private function matchCurrentUrl(): bool
     {
-        $rf = $_POST;
         $url = trim($_SERVER['REQUEST_URI'], '/');
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url)) {

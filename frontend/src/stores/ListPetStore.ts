@@ -13,7 +13,25 @@ class ListPetStore {
 
    fetchData = async () => {
     try {
-      const response = await axios.post(`${API_URL}/main`);
+      // axios({
+      //   method: 'options',
+      //   url: `${API_URL}/main`,
+      //   headers: {
+      //     'Access-Control-Request-Method': 'OPTIONS'
+      //   }
+      // })
+      //   .then(response => {
+      //     // Обработка ответа
+      //   })
+      //   .catch(error => {
+      //     // Обработка ошибки
+      //   });
+      const response = await axios.post(`${API_URL}`,
+        {
+          int: 5,
+          string: 'string'
+        },
+      );
       console.log(response)
     } catch (error) {
       console.error('Ошибка загрузки данных:', error);
