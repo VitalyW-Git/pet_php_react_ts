@@ -6,15 +6,15 @@ return [
 		'controller' => 'main',
 		'action' => 'index',
 	],
-    'getAllPets' => [
+    'get-all-pets' => [
         'controller' => 'main',
         'action' => 'getAllPets',
     ],
-    'getPet' => [
+    'get-pet' => [
         'controller' => 'main',
         'action' => 'getPet',
     ],
-    'updatePrt' => [
+    'update-prt' => [
         'controller' => 'main',
         'action' => 'updatePrt',
     ],

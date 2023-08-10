@@ -19,20 +19,17 @@ class Controller {
 			View::errorCode(403);
 		}
 		$this->view = new View($currentControllerAction);
-		$this->model = $this->loadModel($currentControllerAction['controller']);
+        $this->setPostParams();
 	}
 
-    /**
-     * @param $name
-     * @return mixed|void
-     */
-	public function loadModel($name)
+    private function setPostParams(): void
     {
-		$path = 'application\models\\'.ucfirst($name);
-		if (class_exists($path)) {
-			return new $path;
-		}
-	}
+        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Headers: Content-Type');
+        $rest_json = file_get_contents("php://input");
+        $_POST = json_decode($rest_json, true);
+    }
+
 
     /**
      * @return bool
@@ -41,6 +38,9 @@ class Controller {
     {
 		$this->allAccessPages = require "application/acl/{$this->route['controller']}.php";
 		if ($this->isAccessPage('all')) {
+			return true;
+		}
+        if ($this->isAccessPage('main')) {
 			return true;
 		}
 		return false;

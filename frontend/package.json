@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prod": "webpack --config config/webpack.prod.js",
+    "watch": "webpack --watch --config config/webpack.prod.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

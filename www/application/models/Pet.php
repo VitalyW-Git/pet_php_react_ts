@@ -4,23 +4,46 @@ namespace application\models;
 
 use application\core\Model;
 use Exception;
+use PDO;
 
 /**
  * @property string $name
  * @property string $otype
  * @property string $oid
+ * @property bool $home
+ * @property int $user_id
+ * @property int $birthday
  * @property string $create_at
  * @property string $update_at
  */
 
-class Pet extends Model implements \ModelInterface
+class Pet extends Model
+//class Pet extends Model
 {
     /**
-     * @return mixed
+     * @return array
      */
-    public function findAll()
+    public function findAll(): array
     {
-        return $this->db->column('SELECT * FROM pet');
+        $pets = $this->queryGetPets();
+        if (!$pets) {
+            return [];
+        }
+        foreach ($pets as &$pet) {
+            if (array_key_exists('birthday', $pet)) {
+                $pet['birthday'] = date('Y.m.d', $pet['birthday']);
+            }
+        }
+        return $pets;
+    }
+
+    /**
+     * @return Pet[]
+     */
+    public function queryGetPets(): array
+    {
+        return $this->db->query('SELECT id, name, otype, oid, home, user_id, birthday  FROM pet')
+            ->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

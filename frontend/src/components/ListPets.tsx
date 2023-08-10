@@ -13,6 +13,7 @@ interface ListPetsProps {
 
 interface ListPetsState {
   isModalOpen: boolean;
+  loaderPets: boolean;
 }
 
 @inject("listPetStore")
@@ -22,6 +23,7 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
     super(props);
     this.state = {
       isModalOpen: false,
+      loaderPets: false,
     };
   }
 
@@ -33,19 +35,22 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
     this.setState({isModalOpen: true});
   };
 
+  async componentDidMount() {
+      if (this.props.listPetStore) {
+        const response: boolean = await this.props.listPetStore.fetchData();
+        if (response) {
+          this.setState({ loaderPets: true });
+        }
+      }
+  }
+
   public render() {
-    const {isModalOpen}: ListPetsState = this.state;
-    console.log(isModalOpen)
-    // const { listPetStore } = this.props;
-    // useEffect(() => {
-    //   if (listPetStore) {
-    //     const response: any = listPetStore.fetchData();
-    //     console.log(response)
-    //   }
-    // }, []);
-    return (
-      <div className='layout'>
-        <div className="cards">
+    const {isModalOpen, loaderPets}: ListPetsState = this.state;
+    const { listPetStore} = this.props;
+
+    const listPets = listPetStore?.pets.map(item => {
+      return (
+        <div className="cards" key={item.id}>
           <div className="cards__item">
             <div className="info">
               <div className="info__wrapper">
@@ -53,7 +58,7 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
                   <Image src="https://cdn-icons-png.flaticon.com/512/1050/1050915.png" width={37}/>
                 </div>
                 <div className="nickname">
-                  <span>Гаврюша</span>
+                  <span>{item.name}</span>
                   <span>Питомец</span>
                 </div>
               </div>
@@ -61,7 +66,7 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
                 <div className="title">
                   <span>Дата рождения:</span>
                 </div>
-                <span className="date">12.03.2007</span>
+                <span className="date">{item.birthday}</span>
               </div>
               <div className="info__owner">
                 <div className="title">
@@ -80,6 +85,12 @@ class ListPets extends React.Component<ListPetsProps, ListPetsState> {
             </div>
           </div>
         </div>
+      )
+    })
+
+    return (
+      <div className='layout'>
+        {listPets}
         <CustomForm onHiddenModal={this.onHiddenModal}
                     isModalOpen={isModalOpen}
         />
