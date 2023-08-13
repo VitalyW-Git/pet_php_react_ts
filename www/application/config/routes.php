@@ -10,12 +10,12 @@ return [
         'controller' => 'main',
         'action' => 'getAllPets',
     ],
-    'get-pet' => [
+    'search-user' => [
         'controller' => 'main',
-        'action' => 'getPet',
+        'action' => 'searchUser',
     ],
-    'update-prt' => [
+    'update-pet' => [
         'controller' => 'main',
-        'action' => 'updatePrt',
+        'action' => 'updatePet',
     ],
 ];

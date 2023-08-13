@@ -7,8 +7,6 @@ const ruleForAssets = {
 }
 
 const rules = [ruleForAssets]
-console.log('path', path.resolve(__dirname, '../src/index.tsx'))
-console.log('src', path.resolve(__dirname, '../src'))
 module.exports = {
     entry:  path.resolve(__dirname, '../src/index.tsx'),
     context: path.resolve(__dirname, '../src'),

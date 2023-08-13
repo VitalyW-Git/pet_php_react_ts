@@ -6,4 +6,5 @@ export type PetType = {
   home: boolean,
   user_id: number
   birthday: string,
+  user_name: string
 }

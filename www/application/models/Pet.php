@@ -16,9 +16,7 @@ use PDO;
  * @property string $create_at
  * @property string $update_at
  */
-
 class Pet extends Model
-//class Pet extends Model
 {
     /**
      * @return array
@@ -31,7 +29,10 @@ class Pet extends Model
         }
         foreach ($pets as &$pet) {
             if (array_key_exists('birthday', $pet)) {
-                $pet['birthday'] = date('Y.m.d', $pet['birthday']);
+                $pet['birthday'] = date('Y-m-d', $pet['birthday']);
+            }
+            if (array_key_exists('home', $pet)) {
+                $pet['home'] = (bool)$pet['home'];
             }
         }
         return $pets;
@@ -42,86 +43,53 @@ class Pet extends Model
      */
     public function queryGetPets(): array
     {
-        return $this->db->query('SELECT id, name, otype, oid, home, user_id, birthday  FROM pet')
+        return $this->db->query('
+SELECT p.id as id, 
+        p.name as name, 
+        p.otype as otype, 
+        p.oid as oid, 
+        p.home as home, 
+        p.user_id as user_id, 
+        p.birthday as birthday,
+        u.name as user_name
+FROM pet p
+    INNER JOIN user u on (u.id = p.user_id)')
             ->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
-     * @throws Exception
-     */
-    public function findOne(int $id)
-    {
-        $params = [
-            'id' => $id,
-        ];
-        $result = $this->db->column('SELECT * FROM pet WHERE id = :id', $params);
-
-        if (!$result) {
-            throw new Exception('Запись не найдена');
-        }
-
-        return $result;
-    }
-
-    /**
      * @param array $post
-     * @param int $id
-     * @return void
+     * @return bool
      */
-    public function update($post, $id)
+    public function update(array $post): bool
     {
         $params = [
-            'id' => $id,
             'name' => $post['name'],
-            'home' => $post['home'],
-            'birthday' => $post['birthday'],
-            'user_id' => $post['user_id'],
+            'home' => (int)$post['home'],
+            'birthday' => strtotime(str_replace(".", "-", $post['birthday'])),
+            'user_id' => (int)$post['user_id'],
         ];
         $this->query = 'UPDATE pet SET ';
+        $updates = [];
         foreach ($params as $key => $value) {
             if (!is_null($value)) {
-                if (!empty($this->paramsToUpdate)) {
-                    $this->query .= ', ';
-                }
-
-                $this->query .= "$key = :$key";
+                $updates[] = "$key = :$key";
                 $this->paramsToUpdate[$key] = $value;
             }
         }
         if (empty($this->paramsToUpdate)) {
-            return;
+            return false;
         }
-//        $this->db->query(
-//            'UPDATE pet SET name = :name, home = :home, birthday = :birthday, user_id = :user_id WHERE id = :id',
-//            $params
-//        );
-        $this->db->query(
-            "$this->query WHERE id = :id",
-            array_merge($this->paramsToUpdate, ['id' => $id])
+        $updateQuery = implode(", ", $updates);
+        $stmt = $this->db->query(
+            "$this->query $updateQuery WHERE id = :id",
+            array_merge($this->paramsToUpdate, ['id' => (int)$post['id']])
         );
-    }
-
-    /**
-     * @param array $post
-     * @return false|string
-     * @throws Exception
-     */
-    public function insert($post): bool|string
-    {
-        $params = [
-            'name' => $post['name'],
-            'home' => $post['home'],
-            'birthday' => $post['birthday'],
-            'user_id' => $post['user_id'],
-        ];
-        foreach ($params as $key => $value) {
-            if (!is_null($value)) {
-                throw new Exception("Поле: $key должно быть заполнено");
-            };
+        $rowsAffected = $stmt->rowCount();
+        if ($rowsAffected > 0) {
+            return true;
+        } else {
+            return false;
         }
-        $this->db->query(
-            'INSERT INTO posts VALUES (:name, :home, :birthday, :user_id)',
-            $params);
-        return $this->db->lastInsertId();
     }
 }

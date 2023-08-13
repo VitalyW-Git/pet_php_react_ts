@@ -1,3 +1,8 @@
+.modal-form {
+  .ant-modal-close {
+    display: none;
+  }
+}
 .form {
   &__nikeName {
     margin: 0 0 10px 0;
@@ -18,6 +23,10 @@
     margin-bottom: 10px;
     .ant-form-item-label {
       padding: 0;
+    }
+    .ant-input-search-button {
+      display: flex;
+      align-items: center;
     }
   }
 }

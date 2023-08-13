@@ -24,6 +24,24 @@
           }
         }
       }
+    }
+    .info-hidden {
+      color: red;
+      font-size: 16px;
+      &__wrapper {
+        display: flex;
+        .nickname {
+          color: #403d3d;
+          display: flex;
+          flex-direction: column;
+          padding-left: 10px;
+          span {
+            &:first-child {
+              font-weight: 600;
+            }
+          }
+        }
+      }
       &__birthday,
       &__owner {
         display: flex;
@@ -54,6 +72,13 @@
             }
           }
         }
+      }
+    }
+    .ant-collapse-item {
+      border: none;
+      .ant-collapse-content {
+        border-radius: 8px !important;
+        border: none;
       }
     }
   }

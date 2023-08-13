@@ -6,7 +6,7 @@ return [
 	],
     'main' => [
         'getAllPets',
-        'getPet',
-        'updatePrt',
+        'updatePet',
+        'searchUser',
     ],
 ];

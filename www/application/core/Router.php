@@ -33,7 +33,7 @@ class Router {
      */
     private function matchCurrentUrl(): bool
     {
-        $url = trim($_SERVER['REQUEST_URI'], '/');
+        [$url] = explode('?', trim($_SERVER['REQUEST_URI'], '/'));
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url)) {
                 $this->currentControllerAction = $params;

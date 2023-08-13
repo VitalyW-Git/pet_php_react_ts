@@ -13,6 +13,11 @@ class View {
 		$this->pathView = "{$currentControllerAction['controller']}/{$currentControllerAction['action']}";
 	}
 
+    /**
+     * @param string $title
+     * @param array $vars
+     * @return void
+     */
 	public function render(string $title, array $vars = []): void
     {
 		extract($vars);
@@ -25,12 +30,15 @@ class View {
 		}
 	}
 
+    /**
+     * @param int $code
+     * @return void
+     */
 	public static function errorCode(int $code) {
 		http_response_code($code);
 		$pathView = "application/views/errors/$code.php";
 		if (file_exists($pathView)) {
 			require $pathView;
 		}
-		exit;
 	}
 }	

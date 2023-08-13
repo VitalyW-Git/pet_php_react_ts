@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `pet`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pet` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Имя питомца',
-  `otype` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `oid` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Имя питомца',
+  `otype` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `oid` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `home` tinyint(1) NOT NULL DEFAULT '0',
   `user_id` int NOT NULL COMMENT 'Идентификатор владельца',
   `birthday` bigint NOT NULL COMMENT 'Дата рождения',
@@ -44,7 +44,7 @@ CREATE TABLE `pet` (
 
 LOCK TABLES `pet` WRITE;
 /*!40000 ALTER TABLE `pet` DISABLE KEYS */;
-INSERT INTO `pet` VALUES (1,'Вуди','pet','pet1',1,1,1671148800,'2023-08-09 20:54:34','2023-08-09 20:55:20'),(2,'Макс','pet','pet2',1,2,1663891200,'2023-08-09 20:55:00','2023-08-09 20:55:00'),(3,'Дэвид','pet','pet3',1,3,1654214400,'2023-08-09 20:55:05','2023-08-09 20:55:05');
+INSERT INTO `pet` VALUES (1,'Маргаритка','pet','pet1',1,6,1691798400,'2023-08-09 20:54:34','2023-08-13 23:48:00'),(2,'Макс','pet','pet2',1,2,1663891200,'2023-08-09 20:55:00','2023-08-09 20:55:00'),(3,'Дэвид','pet','pet3',1,3,1654214400,'2023-08-09 20:55:05','2023-08-09 20:55:05');
 /*!40000 ALTER TABLE `pet` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -75,13 +75,13 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Имя пользователя',
-  `otype` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `oid` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Имя пользователя',
+  `otype` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `oid` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Том Харди','user','user1','2023-08-09 20:53:09','2023-08-09 20:53:09'),(2,'Джордж Клуни','user','user2','2023-08-09 20:53:19','2023-08-09 20:53:19'),(3,'Дэвид Бекхэм','user','user3','2023-08-09 20:53:26','2023-08-09 20:53:26');
+INSERT INTO `user` VALUES (1,'Том Харди','user','user1','2023-08-09 20:53:09','2023-08-09 20:53:09'),(2,'Джордж Клуни','user','user2','2023-08-09 20:53:19','2023-08-09 20:53:19'),(3,'Дэвид Бекхэм','user','user3','2023-08-09 20:53:26','2023-08-09 20:53:26'),(4,'Джонни Депп','user','user4','2023-08-13 21:51:30','2023-08-13 21:51:53'),(5,'Киану Ривз','user','user5','2023-08-13 21:52:06','2023-08-13 21:52:06'),(6,'Вин Дизель','user','user6','2023-08-13 21:52:33','2023-08-13 21:52:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -121,4 +121,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-09 21:23:20
+-- Dump completed on 2023-08-13 23:49:10

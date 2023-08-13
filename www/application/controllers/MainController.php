@@ -4,11 +4,11 @@ namespace application\controllers;
 
 use application\core\Controller;
 use application\models\Pet;
+use application\models\User;
 
 class MainController extends Controller {
 
 	public function indexAction() {
-        $rf = $_POST;
 		$this->view->render('Главная страница');
 	}
 
@@ -32,11 +32,26 @@ class MainController extends Controller {
         die();
     }
 
-    public function getPetAction() {
-		$this->view->render('Главная страница');
+    public function searchUserAction()
+    {
+        if (array_key_exists('search', $_GET)) {
+            $users = (new User())->querySearch($_GET['search']);
+            echo json_encode([
+                "status" => 200,
+                "users" => $users
+            ]);
+            die();
+        }
 	}
 
-    public function updatePrtAction() {
-		$this->view->render('Главная страница');
+
+    public function updatePetAction()
+    {
+        $success = (new Pet())->update($_POST);
+        echo json_encode([
+            "status" => 200,
+            "success" => $success
+        ]);
+        die();
 	}
 }
